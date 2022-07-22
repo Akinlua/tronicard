@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+ 
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TemplateMo">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <title>Tronicard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-stand-blog.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+<!--
+
+TemplateMo 551 Stand Blog
+
+https://templatemo.com/tm-551-stand-blog
+
+-->
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+
+    {% include 'navbar.html' %}
+
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="heading-page header-text">
+      <section class="page-heading">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-content">
+                <h4>Recent Posts</h4>
+                <h2>Our Recent Blog Entries</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    
+    <!-- Banner Ends Here -->
+
+    <section class="call-to-action">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="main-content">
+              <div class="row">
+                <div class="col-lg-8">
+                  <span>Stand Blog HTML5 Template</span>
+                  <h4>Creative HTML Template For Bloggers!</h4>
+                </div>
+                <div class="col-lg-4">
+                  <div class="main-button">
+                    <a href="https://templatemo.com/tm-551-stand-blog" target="_parent">Download Now!</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="blog-posts grid-system">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="all-blog-posts">
+              <div class="row">
+                {% if blogs %}
+                {% for blog in blogs %}
+                <div class="col-lg-6">
+                  <div class="blog-post">
+                    <div class="blog-thumb">
+                      <img  src="{{blog.blog_image.url}}" alt="">
+                    </div>
+                    <div class="down-content">
+                      {% if blog.addcategory == 'none' %}
+                      <span>{{blog.categories.name}}</span>
+                      {% elif blog.addcategory %}
+                      <span>{{blog.addcategory}}</span>
+                      {% else %}
+                      <span>{{blog.categories.name}}</span>
+                     
+                      
+                      {% endif %}
+                      
+                      <a href="{% url 'singleblog' blog.id %}"><h4>{{blog.title}}</h4></a>
+                      <ul class="post-info">
+                        <li><a href="#">Admin</a></li>
+                        <li><a href="#">{{blog.created}}</a></li>
+                        <li><a href="{% url 'singleblog' blog.id %}#com">{{blog.comments_set.all.count}} Comment{{blog.comments_set.all.count|pluralize:"s"}}</a></li>
+                      </ul>
+                      <p>{{blog.body|slice:150}}</p>
+                      <div class="post-options">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <ul class="post-tags">
+                              
+                              {% if blog.tags.all %}
+                                
+                                    <li><i class="fa fa-tags"></i></li>
+                                    {% for tag in blog.tags.all %}
+                                    <li><a >{{tag.name}}</a>
+                                    {% if blog.tags.last == tag %}
+                                    {% else %}
+                                    ,
+                                    {% endif %}
+                                    </li>
+                                    {% endfor %}
+                                  {% if blog.addtag %}
+                                    <li><a>, {{blog.addtag}}</a></li>
+                                  {% endif %}
+                              {% else %}
+                                 {% if blog.addtag %}   
+                                <li><i class="fa fa-tags"></i></li>
+                                <li><a>{{blog.addtag}}</a></li>
+                                {% endif %}
+                              {% endif %}
+                            </ul>
+                          </div>
+                          <br><br>
+                          <a href="{% url 'deletepost' blog.id %}?next={% url 'blog' %}" >Delete Post</a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h1>No post Found</h1>
+                {% endif %}
+                
+                
+                <div class="col-lg-12">
+                  <ul class="page-numbers">
+                    {% if blogs.has_previous %}
+                    <li><a  href="?page={{blogs.previous_page_number}}&q={{q}}"><i class="fa fa-angle-double-left"></i></a></li>
+                    {% endif %}
+
+                    
+                    {% for page in customRange%}
+                    {% if page == blogs.number %}
+                    <li><a href="?page={{page}}&q={{q}}" class="active" ></a>{{page}}</a></li>
+                    {% else %}
+                    <li><a href="?page={{page}}&q={{q}}" >{{page}}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    
+                    <!-- <li><a href="?page=1">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li> -->
+
+                    {% if blogs.has_next %}
+                    <li><a  href="?page={{blogs.next_page_number}}&q={{q}}"><i class="fa fa-angle-double-right"></i></a></li>
+                    {% endif %}
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          {% include 'side.html' %}
+          
+        </div>
+      </div>
+    </section>
+
+    {% include 'footer.html' %}
+
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Additional Scripts -->
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+    <script src="{% static 'assets/js/owl.js' %}"></script>
+    <script src="{% static 'assets/js/slick.js' %}"></script>
+    <script src="{% static 'assets/js/isotope.js' %}"></script>
+    <script src="{% static 'assets/js/accordions.js' %}"></script>
+
+    <script language = "{% static 'text/Javascript' %}"> 
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,142 @@
+{% load static %}
+    <section class="blog-posts">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="all-blog-posts">
+                <div class="row">
+  
+                  {% if blogs %}
+                  {% for blog in blogs %}
+                  <div style="width: 700px;" class="posts-box" class="col-lg-12">
+                    <div   class="blog-post">
+                      <div class="blog-thumb">
+                        <img src="{{blog.blog_image.url}}" alt="">
+                      </div>
+                      <div class="down-content">
+                        {% if blog.addcategory == 'none' %}
+                        <span>{{blog.categories.name}}</span>
+                        {% elif blog.addcategory %}
+                        <span>{{blog.addcategory}}</span>
+                        {% else %}
+                        <span>{{blog.categories.name}}</span>
+                        {% endif %}
+                        <a href="{% url 'singleblog' blog.id %}"><h4>{{blog.title}}</h4></a>
+                        <ul class="post-info">
+                          <li><a href="#">Admin</a></li>
+                          <li><a href="#">{{blog.created}}</a></li>
+                          <li><a href="{% url 'singleblog' blog.id %}#com">{{blog.comments_set.all.count}} Comment{{blog.comments_set.all.count|pluralize:"s"}}</a></li>
+                        </ul>
+                        <p>{{blog.body|slice:150|linebreaksbr}}</p>
+                        <div class="post-options">
+                          <div class="row">
+                            <div class="col-6">
+                              <ul class="post-tags">
+                                {% if blog.tags.all %}
+                                  
+                                      <li><i class="fa fa-tags"></i></li>
+                                      {% for tag in blog.tags.all %}
+                                      <li><a >{{tag.name}}</a>
+                                      {% if blog.tags.last == tag %}
+                                      {% else %}
+                                      ,
+                                      {% endif %}
+                                      </li>
+                                      {% endfor %}
+                                    {% if blog.addtag %}
+                                      <li><a>, {{blog.addtag}}</a></li>
+                                    {% endif %}
+                                {% else %}
+                                   {% if blog.addtag %}   
+                                  <li><i class="fa fa-tags"></i></li>
+                                  <li><a>{{blog.addtag}}</a></li>
+                                  {% endif %}
+                                {% endif %}
+                              </ul>
+                            </div>
+                            <div class="col-6">
+                              <ul class="post-share">
+                                <li><i class="fa fa-share-alt"></i></li>
+                                <li><a href="#">Facebook</a>,</li>
+                                <li><a href="#"> Twitter</a></li>
+                              </ul>
+                            </div>
+                          </div>
+                          <br>
+                          {% if request.user.profile.is_admin %}
+                          <a href="{% url 'deletepost' blog.id %}" >Delete Post</a>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+                  
+  
+  
+                  {% endfor %}
+
+                  {% else %}
+                  <h1>No Post Found</h1>
+                  {% endif %}
+                  
+                  
+                </div>
+
+                
+              </div>
+              {% if blogs %}
+                  <div class="col-lg-12">
+                    <div class="main-button">
+                      <a id="viw" href="{% url 'blog' %}">View All Posts</a>
+                    </div>
+                  </div>
+                  {% endif %}
+            </div>
+            
+            {% include 'side.html' with tags=tags  %}
+  
+          </div>
+          
+        </div>
+        
+      </section>
+      
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $("#load-btn").on('click',function(){
+            var _currentResult=$(".posts-box").length
+            $.ajax({
+                url:"{% url 'loadmore' %}",
+                type:'post',
+                data:{
+                    'start':_currentResult,
+                    'csrfmiddlewaretoken':'{{csrf_token}}'
+                },
+                dataType:'json',
+                beforeSend:function(){
+                    $("#load-btn").addClass('disabled').text('loading')
+                },
+                success:function(res){
+                    var _html=''
+                    var json_data=$.parseJSON(res.blog)
+                    $.each(json_data, function(index,data){
+                        _html+=''
+
+                    })
+                    $(".col-lg-8").append(_html)
+                    $("#load-btn").removeClass('disabled').text('Load more')
+
+                }
+            })
+
+        })
+    })
+
+
+
+
+</script>
+<script src="{% static 'js/comment.js' %}"></script>
