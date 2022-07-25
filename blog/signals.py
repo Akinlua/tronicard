@@ -14,7 +14,7 @@ def updateTag(sender, instance, created, **kwargs):
                 tags= tags.split()
                 for tag in tags:
                     tags_=Tags.objects.create(
-                        name=tag[0:-1]
+                        name=tag
                     )
     
 
