@@ -12,7 +12,7 @@ class Blog(models.Model):
     addtag=  models.CharField(max_length=200, null=True, blank=True)
     categories= models.ForeignKey('categories', on_delete=models.SET_NULL, null=True)
     addcategory= models.CharField(max_length=200, null=True)
-    blog_image= models.ImageField(default='Tronicard.png', upload_to = 'blogpic/' )
+    blog_image= models.ImageField(default='Tronicard.png' )
     
     body= models.TextField()
     created= models.DateTimeField(auto_now_add=True)
@@ -35,7 +35,7 @@ class Comments(models.Model):
     reply= models.ForeignKey('self', null=True,on_delete=models.CASCADE, blank=True)
     reply_name=models.CharField(max_length=500, blank=True)
     reply_body=models.TextField(null=True,  blank=True)
-    comment_image= models.ImageField(default='profile/userimage.png', upload_to = 'commentpic/' )
+    comment_image= models.ImageField(default='userimage.png' )
     body= models.TextField( blank=True)
     blog= models.ForeignKey(Blog, on_delete=models.CASCADE)
     created= models.DateTimeField(auto_now_add=True)
