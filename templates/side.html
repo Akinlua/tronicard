@@ -45,8 +45,10 @@
             <div class="content">
               <ul>
                 {% for category in categories %}
+                {% if category.name != 'None' %}
                 <li><a href="{% url 'blog' %}?q={{category.name}}">- {{category.name}}</a></li>
                 <!-- <li><a href="#">- Creative &amp; Unique</a></li> -->
+                {% endif %}
                 {% endfor %}
               </ul>
             </div>
