@@ -9,7 +9,7 @@ from django.conf import settings
 from django.views.static import serve
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('troadmin/', admin.site.urls),
     path('', include('blog.urls')),
     path('account/', include('users.urls')),
 

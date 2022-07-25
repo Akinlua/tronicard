@@ -10,9 +10,12 @@
     <meta name="description" content="">
     <meta name="author" content="TemplateMo">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
-    <!-- <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}"> -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
     <title>Tronicard</title>
-
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/video-default.css" rel="stylesheet">
+    <script type="text/javascript" src="assets/js/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.video-ui.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -43,7 +46,8 @@ https://templatemo.com/tm-551-stand-blog
     <!-- ***** Preloader End ***** -->
 
     {% include 'navbar.html' %}
-
+    
+   
     <!-- Page Content -->
     <!-- Banner Starts Here -->
     <div class="heading-page header-text">
@@ -217,6 +221,11 @@ https://templatemo.com/tm-551-stand-blog
           t.style.color='#fff';
           }
       }
+
+      $('#demo1').videoUI({
+        'autoHide':false,
+        'volumeMedia': 1
+      });
     </script>
 
   </body>

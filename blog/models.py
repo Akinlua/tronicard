@@ -13,6 +13,7 @@ class Blog(models.Model):
     categories= models.ForeignKey('categories', on_delete=models.SET_NULL, null=True)
     addcategory= models.CharField(max_length=200, null=True)
     blog_image= models.ImageField(default='commentpic/Tronicard.png', upload_to = 'blogpic/' )
+    
     body= models.TextField()
     created= models.DateTimeField(auto_now_add=True)
     id= models.UUIDField(default = uuid.uuid4, primary_key=True, unique=True, editable=False)
