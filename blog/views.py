@@ -1,14 +1,11 @@
 
 # Create your views here.
 
-from tkinter import Image
-from unittest import result
+
 from django.utils.datastructures import MultiValueDictKeyError
 from urllib import request
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from tkinter.messagebox import RETRY
-from xml.etree.ElementTree import Comment
 from django.shortcuts import render, redirect
 from .form import BlogForm, CommentForm
 from .models import Blog, Comments, Tags, Categories
