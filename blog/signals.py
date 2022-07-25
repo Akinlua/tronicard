@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 from .models import Tags, Blog, Categories
 
-from django.core.mail import send_mail
+
 from django.conf import settings
 
 def updateTag(sender, instance, created, **kwargs):

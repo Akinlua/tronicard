@@ -1,6 +1,4 @@
-import imp
-from tkinter import Widget
-from tkinter.ttk import Style
+
 from django import forms
 from django.forms import ModelForm
 from .models import Blog, Comments

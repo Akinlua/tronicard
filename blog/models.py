@@ -1,9 +1,8 @@
-from pyexpat import model
-from re import T
+
 from django.db import models
 import uuid
 from users.models import Profile
-from PIL import Image
+
 # Create your models here.
 
 class Blog(models.Model):

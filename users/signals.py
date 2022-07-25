@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 
 from .models import Profile
 
-from django.core.mail import send_mail
 from django.conf import settings
 
 def createProfile(sender, instance, created, **kwargs ):
