@@ -12,7 +12,7 @@ class Blog(models.Model):
     addtag=  models.CharField(max_length=200, null=True, blank=True)
     categories= models.ForeignKey('categories', on_delete=models.SET_NULL, null=True)
     addcategory= models.CharField(max_length=200, null=True)
-    blog_image= models.ImageField(default='commentpic/Tronicard.png', upload_to = 'blogpic/' )
+    blog_image= models.ImageField(default='Tronicard.png', upload_to = 'blogpic/' )
     
     body= models.TextField()
     created= models.DateTimeField(auto_now_add=True)
