@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-yn1bckn#jns7w3c%9%xb*9k@0p1frj#p)3#3u=t12vatzf45$w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'tronicard.herokuapp.com']
 
@@ -126,7 +127,7 @@ USE_TZ = True
 
 
 STATIC_URL = 'static/'
-MEDIA_URL='static/images/'
+MEDIA_URL='/images/'
 
 STATICFILES_DIRS=[
     BASE_DIR / 'static'
@@ -139,3 +140,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_heroku.settings(locals())
