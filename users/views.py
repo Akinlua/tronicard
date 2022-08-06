@@ -19,7 +19,7 @@ def createAccount(request):
             user= form.save(commit=False)
             user.save()
             login(request, user)
-            return redirect('account')
+            return redirect('home')
     context={'form':form, 'page':page}
     return render(request, 'users/create-login.html', context)
 

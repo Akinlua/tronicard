@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
+    'django_social_share',
 ]
 
 
