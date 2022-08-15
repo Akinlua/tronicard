@@ -62,9 +62,7 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 #images
-static/media
-media/
-media
+
 # Flask stuff:
 instance/
 .webassets-cache
