@@ -1,9 +1,5 @@
 
 # Create your views here.
-
-
-from email.policy import default
-from tkinter import Image
 from django.utils.datastructures import MultiValueDictKeyError
 from urllib import request
 from django.contrib.auth.decorators import login_required
