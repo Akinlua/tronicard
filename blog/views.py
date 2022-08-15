@@ -2,6 +2,8 @@
 # Create your views here.
 
 
+from email.policy import default
+from tkinter import Image
 from django.utils.datastructures import MultiValueDictKeyError
 from urllib import request
 from django.contrib.auth.decorators import login_required
@@ -9,7 +11,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from .form import BlogForm, CommentForm
 from .models import Blog, Comments, Tags, Categories
-from .utils import searchStuff, sideBlog, disorder_Blog, paginateQuery
+from .utils import searchStuff, sideBlog, disorder_Blog, paginateQuery, blogimgnames
 from django.core.paginator import Paginator
 from random import shuffle
 from django.contrib import messages
@@ -35,8 +37,8 @@ def home(request):
     tags= Tags.objects.all()
     categories= Categories.objects.all()
     # disorder_blog, customRange=paginateQuery(request, blog, 5)
-    
-    context={'blogs':disorder_blog, 'banner_blog':banner_blog, 'q':q, 'sidebl':sideblog, 'tags':tags, 'categories':categories}
+    blog_images=blogimgnames()
+    context={'blog_images':blog_images, 'blogs':disorder_blog, 'banner_blog':banner_blog, 'q':q, 'sidebl':sideblog, 'tags':tags, 'categories':categories}
     return render(request, 'home.html', context)
 
 def exitNot(request):
@@ -56,9 +58,9 @@ def createBlog(request):
             if form.is_valid():
                 
                 blog=form.save(commit=False)
-                blog.addcategory=blog.addcategory.lower()
+                blog.addcategory=blog.addcategory.lower() 
                 if blog.categories.name == 'None' and blog.addcategory == 'none':
-                    messages.error(request, 'Make sure you add a category')
+                    messages.error(request, 'Make sure you add a category') 
                 else:
                     blog.save()
                     return redirect('home')
@@ -77,8 +79,9 @@ def blog(request):
     
     tags= Tags.objects.all()
     categories= Categories.objects.all()
-    
-    context={'categories':categories, 'tags':tags, 'customRange':customRange,'blogs':blogs, 'q':q, 'sidebl':sideblog}
+
+    blog_images=blogimgnames()
+    context={'categories':categories, 'tags':tags, 'customRange':customRange,'blogs':blogs, 'q':q, 'sidebl':sideblog, 'blog_images':blog_images}
     return render(request, 'blog/blog.html', context)
 def deletecomment(request, pk):
     try:
@@ -102,7 +105,7 @@ def singleBlog(request, pk):
     tags= Tags.objects.all()
     categories= Categories.objects.all()
     blog = Blog.objects.get(id=pk)
-    
+    blog_images=blogimgnames()
     try:
         user= request.user.profile
     except:
@@ -148,7 +151,7 @@ def singleBlog(request, pk):
     
     
     comment_count= blog.comments_set.all().count()
-    context={'categories':categories,'tags':tags, 'blog':blog, 'q':q, 'blogs': blogs, 'form': form, 'comments': comments,'comment_count':comment_count, 'sidebl':sideblog}
+    context={'categories':categories,'tags':tags, 'blog':blog, 'q':q, 'blogs': blogs, 'form': form, 'comments': comments,'comment_count':comment_count, 'sidebl':sideblog, 'blog_images':blog_images}
     return render(request, 'blog/post-details.html', context)
 
 

@@ -3,6 +3,10 @@ from .models import Blog, Comments, Tags, Categories
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from random import shuffle
 
+def blogimgnames():
+    blog_images=['salvation', 'jesus', 'good']
+    return blog_images
+    
 def searchStuff(request):
     q=''
     if request.GET.get('q'):

@@ -101,7 +101,19 @@ https://templatemo.com/tm-551-stand-blog
                 <div class="col-lg-6">
                   <div class="blog-post">
                     <div class="blog-thumb">
-                      <img  src="{{blog.blog_image.url}}" alt="">
+                      {% if blog.categories.name != 'none' %}
+                        {% if blog.categories.name in blog_images %}
+                        <img src="{% static 'media/' %}{{blog.categories.name}}.png" alt="">
+                        {% else %}
+                        <img src="{{blog.blog_image.url}}" alt="">
+                        {% endif %}
+                      {% elif blog.addcategory != 'none' %}
+                        {% if blog.addcategory in blog_images %}
+                        <img src="{% static 'media/' %}{{blog.addcategory}}.png" alt="">
+                        {% else %}
+                        <img src="{{blog.blog_image.url}}" alt="">
+                        {% endif %}
+                      {% endif %}
                     </div>
                     <div class="down-content">
                       {% if blog.addcategory == 'none' %}

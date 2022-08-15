@@ -6,7 +6,7 @@ from .models import Blog, Comments
 class BlogForm(ModelForm):
     class Meta:
         model= Blog
-        fields= ['title', 'blog_image', 'categories','addcategory', 'tags','addtag', 'body']
+        fields= ['title', 'categories','addcategory', 'tags','addtag', 'body']
         labels={
             'categories':'Category',
             'tags':'Tag',
