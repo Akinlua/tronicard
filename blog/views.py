@@ -34,6 +34,7 @@ def home(request):
     categories= Categories.objects.all()
     # disorder_blog, customRange=paginateQuery(request, blog, 5)
     blog_images=blogimgnames()
+    
     context={'blog_images':blog_images, 'blogs':disorder_blog, 'banner_blog':banner_blog, 'q':q, 'sidebl':sideblog, 'tags':tags, 'categories':categories}
     return render(request, 'home.html', context)
 
