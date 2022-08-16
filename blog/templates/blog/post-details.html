@@ -96,20 +96,16 @@ https://templatemo.com/tm-551-stand-blog
                 <div class="col-lg-12">
                   <div class="blog-post">
                     <div class="blog-thumb">
-                      {% if blog.categories.name != 'none' %}
-                        {% if blog.categories.name in blog_images %}
-                        <img src="{% static 'media/' %}{{blog.categories.name}}.png" alt="">
-                        {% else %}
-                        <img src="{{blog.blog_image.url}}" alt="">
-                        {% endif %}
-                      {% elif blog.addcategory != 'none' %}
-                        {% if blog.addcategory in blog_images %}
-                        <img src="{% static 'media/' %}{{blog.addcategory}}.png" alt="">
-                        {% else %}
-                        <img src="{{blog.blog_image.url}}" alt="">
-                        {% endif %}
+                        
+                      {% if blog.addcategory in blog_images %}
+                      <img src="{% static 'media/' %}{{blog.addcategory}}.png" alt="">
+                      {% elif blog.categories.name in blog_images %}
+                      <img src="{% static 'media/' %}{{blog.categories.name}}.png" alt="">
+                      {% else %}
+                      <img src="{{blog.blog_image.url}}" alt="">
                       {% endif %}
-                    </div>
+                  </div>
+
                     <div class="down-content">
                       {% if blog.addcategory == 'none' %}
                       <span>{{blog.categories.name}}</span>
@@ -131,26 +127,13 @@ https://templatemo.com/tm-551-stand-blog
                         <div class="row">
                           <div class="col-6">
                             <ul class="post-tags">
-                              {% if blog.tags.all %}
-                                
-                                    <li><i class="fa fa-tags"></i></li>
-                                    {% for tag in blog.tags.all %}
-                                    <li><a >{{tag.name}}</a>
-                                    {% if blog.tags.last == tag %}
-                                    {% else %}
-                                    ,
-                                    {% endif %}
-                                    </li>
-                                    {% endfor %}
-                                  {% if blog.addtag %}
-                                    <li><a>, {{blog.addtag}}</a></li>
-                                  {% endif %}
-                              {% else %}
-                                 {% if blog.addtag %}   
                                 <li><i class="fa fa-tags"></i></li>
-                                <li><a>{{blog.addtag}}</a></li>
+                                {% for tag in blog.tags.all %}
+                                <li><a >{{tag.name}}</a></li>
+                                {% endfor %}
+                                {% if blog.addtag %}
+                                <li><a> {{blog.addtag}}</a></li>
                                 {% endif %}
-                              {% endif %}
                             </ul>
                           </div>
                           <div class="col-6">
