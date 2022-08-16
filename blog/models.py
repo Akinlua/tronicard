@@ -44,7 +44,7 @@ class Comments(models.Model):
         return str(self.blog)
 
     class Meta:
-        ordering= ['-created']
+        ordering= ['created']
     
     def names(self):
         return Comments.objects.filter(name=self)
