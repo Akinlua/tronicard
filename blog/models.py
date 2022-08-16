@@ -59,7 +59,7 @@ class Comments(models.Model):
         return True
 
 class Tags(models.Model):
-    name= models.CharField(max_length=200, null=True)
+    name= models.CharField(max_length=200)
     created= models.DateTimeField(auto_now_add=True)
     id= models.UUIDField(default = uuid.uuid4, primary_key=True, unique=True, editable=False)
     def __str__(self):

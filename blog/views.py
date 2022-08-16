@@ -43,6 +43,7 @@ def exitNot(request):
     
 @login_required(login_url='login')
 def createBlog(request):
+    profile = request.user.profile
     try:
         admin = request.user.profile.is_admin
     except:
@@ -55,12 +56,14 @@ def createBlog(request):
             if form.is_valid():
                 
                 blog=form.save(commit=False)
+                blog.owner= profile
                 blog.addcategory=blog.addcategory.lower() 
                 blog.title=blog.title.upper()
                 if blog.categories.name == 'None' and blog.addcategory == 'none':
                     messages.error(request, 'Make sure you add a category') 
                 else:
                     blog.save()
+                    form.save_m2m()
                     return redirect('home')
             
         context={'form':form}

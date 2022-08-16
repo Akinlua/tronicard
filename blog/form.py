@@ -13,7 +13,6 @@ class BlogForm(ModelForm):
             'addcategory': 'Add new category',
             'addtag':'addtag',
         }
-       
 
 
 class CommentForm(ModelForm):

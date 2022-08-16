@@ -29,6 +29,54 @@ https://templatemo.com/tm-551-stand-blog
 -->
   </head>
 
+  <style>
+    .alert {
+  display: inline-flex;
+  gap: 3rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2.5rem;
+  border-radius: 3px;
+  border: 1px solid var(--color-white-light);
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+}
+
+.alert,
+.alert > .alert__message {
+  background-color: var(--color-main-light);
+  color: var(--color-main);
+  font-size: 1.4rem;
+  font-weight: var(--font-medium);
+}
+
+.alert.alert--error,
+.alert.alert--error > .alert__message {
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.alert.alert--success,
+.alert.alert--success > .alert__message {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.alert > .alert__close {
+  background: transparent;
+  cursor: pointer;
+  border: none;
+  outline: transparent;
+  font-size: 2rem;
+  transition: var(--generic-transition);
+}
+
+.alert > .alert__close:hover {
+  opacity: 0.85;
+}
+
+</style>
+
   <body>
 
     <!-- ***** Preloader Start ***** -->
@@ -73,10 +121,19 @@ https://templatemo.com/tm-551-stand-blog
                 <div class="col-lg-8">
                   <div class="sidebar-item contact-form">
                     <div class="sidebar-heading">
+                      
                       <h2>Create a post</h2>
                     </div>
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert--{{ message.tags }}">
+                        <p class="alert__message">{{message}}</p>
+                        <button class="alert__close">⨯</button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
                     <div class="content">
-                      <form id="contact" action="" method="post" enctype="multipart/form-data">
+                      <form id="contact" action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {% for field in form %}
                         {% if field.label == 'Tag' %}
@@ -147,6 +204,22 @@ https://templatemo.com/tm-551-stand-blog
           }
       }
     </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        hljs.highlightAll();
+      });
 
+
+      let alertWrapper= document.querySelector('.alert')
+      let alertClose = document.querySelector('.alert__close')
+
+      if (alertWrapper) {
+        console.log('Alert Wrapper clicked')
+        alertClose.addEventListener('click', () =>
+          alertWrapper.style.display = 'none'
+        )
+
+      }
+    </script>
   </body>
 </html>

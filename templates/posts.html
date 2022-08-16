@@ -44,26 +44,20 @@
                           <div class="row">
                             <div class="col-6">
                               <ul class="post-tags">
-                                {% if blog.tags.all %}
+                                
                                   
-                                      <li><i class="fa fa-tags"></i></li>
-                                      {% for tag in blog.tags.all %}
-                                      <li><a >{{tag.name}}</a>
-                                      {% if blog.tags.last == tag %}
-                                      {% else %}
-                                      ,
-                                      {% endif %}
-                                      </li>
-                                      {% endfor %}
-                                    {% if blog.addtag %}
-                                      <li><a>, {{blog.addtag}}</a></li>
-                                    {% endif %}
-                                {% else %}
-                                   {% if blog.addtag %}   
+                                <li><i class="fa fa-tags"></i></li>
+                                {% for tag in blog.tags.all %}
+                                <li><a >{{tag.name}}</a></li>
+                                {% endfor %}
+                                {% if blog.addtag %}
+                                <li><a> {{blog.addtag}}</a></li>
+                                {% endif %}
+                                
+                                   <!-- {% if blog.addtag %}   
                                   <li><i class="fa fa-tags"></i></li>
                                   <li><a>{{blog.addtag}}</a></li>
-                                  {% endif %}
-                                {% endif %}
+                                  {% endif %} -->
                               </ul>
                             </div>
                             <!-- <div class="col-6">
