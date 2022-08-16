@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from random import shuffle
 
 def blogimgnames():
-    blog_images=['salvation', 'jesus', 'mercys']
+    blog_images=['salvation', 'jesus', 'mercy']
     return blog_images
     
 def searchStuff(request):
