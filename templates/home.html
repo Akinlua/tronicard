@@ -95,7 +95,21 @@ https://templatemo.com/tm-551-stand-blog
           
           {% for blog in banner_blog %}
           <div class="item">
-            <img style="height: 350px; filter: brightness(50%);" src="{{blog.blog_image.url}}" alt="">
+            
+            {% if blog.categories.name != 'none' %}
+              {% if blog.categories.name in blog_images %}
+              <img style="height: 350px; filter: brightness(50%);" src="{% static 'media/' %}{{blog.categories.name}}.png" alt="">
+              {% else %}
+              <img style="height: 350px; filter: brightness(50%);" src="{{blog.blog_image.url}}" alt="">
+              {% endif %}
+            {% elif blog.addcategory != 'none' %}
+              {% if blog.addcategory in blog_images %}
+              <img style="height: 350px; filter: brightness(50%);" src="{% static 'media/' %}{{blog.addcategory}}.png" alt="">
+              {% else %}
+              <img style="height: 350px; filter: brightness(50%);" src="{{blog.blog_image.url}}" alt="">
+              {% endif %}
+            {% endif %}
+            
             <div class="item-content">
               <div class="main-content">
                 <div class="meta-category">
