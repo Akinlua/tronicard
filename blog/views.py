@@ -71,6 +71,48 @@ def createBlog(request):
     else:
         return redirect('pagenot')
 
+@login_required(login_url='login')
+def updateBlog(request, pk):
+    profile = request.user.profile
+    blogs= profile.blog_set.get(id=pk)
+    try:
+        admin = request.user.profile.is_admin
+    except:
+        admin = None
+    if admin:
+        form = BlogForm(instance= blogs)
+        if request.method == "POST":
+            form = BlogForm(request.POST, request.FILES, instance= blogs)
+            if form.is_valid():
+                blog = form.save(commit=False)
+                blog.owner= profile
+                blog.addcategory=blog.addcategory.lower() 
+                blog.title=blog.title.upper()
+                if blog.categories.name == 'None' and blog.addcategory == 'none':
+                    messages.error(request, 'Make sure you add a category') 
+                else:
+                    blog.save()
+                    form.save_m2m()
+                    return redirect('home')
+        context={'form':form}
+        return render(request, 'blog/create-blog.html', context)
+    else:
+        return redirect('pagenot')
+
+@login_required(login_url='login')
+def deletePost(request, pk):
+    try:
+        admin = request.user.profile.is_admin
+    except:
+        admin = None
+    if admin:
+        blog = Blog.objects.get(id=pk)
+        blog.delete()
+        return redirect(request.GET['next'] if 'next' in request.GET else 'home')
+    else:
+        return redirect('pagenot')
+
+        
 def blog(request):
 
     blog,q= searchStuff(request) 
@@ -299,18 +341,6 @@ def replyform(request):
         return JsonResponse({"comments": ser_comment, 'total_data:':total_data,}, status=200)
     
 
-@login_required(login_url='login')
-def deletePost(request, pk):
-    try:
-        admin = request.user.profile.is_admin
-    except:
-        admin = None
-    if admin:
-        blog = Blog.objects.get(id=pk)
-        blog.delete()
-        return redirect(request.GET['next'] if 'next' in request.GET else 'home')
-    else:
-        return redirect('pagenot')
 
 def loadmore(request):
     # offset = request.POST.get('is_private', False)

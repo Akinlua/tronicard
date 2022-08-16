@@ -13,7 +13,7 @@ urlpatterns = [
     path('single-blog/<str:pk>/', views.singleBlog, name='singleblog'),
     path('pagenotfound/', views.exitNot, name='pagenot'),
     path('deletePost/<str:pk>/', views.deletePost, name='deletepost'),
-    
+    path('updateBlog/<str:pk>/', views.updateBlog, name='updateblog'),
     path('loadmore/', views.loadmore, name='loadmore'),
     path('createForm/', views.createCommentForm, name='createform'),
     path('replyform/', views.replyform, name='replyform'),

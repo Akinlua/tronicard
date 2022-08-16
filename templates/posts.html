@@ -70,7 +70,11 @@
                           </div>
                           <br>
                           {% if request.user.profile.is_admin %}
-                          <a href="{% url 'deletepost' blog.id %}" >Delete Post</a>
+                          {% if request.user.profile == blog.owner %}
+                          <a href="{% url 'deletepost' blog.id %}" >Delete</a>
+                          
+                          <a href="{% url 'updateblog' blog.id %}" >Edit</a>
+                          {% endif %}
                           {% endif %}
                         </div>
                       </div>
