@@ -268,188 +268,189 @@ $(document).ready(function(){
     })
 })
 
-  $(document).on('click', '#comment-submit', function (e) {
-          e.preventDefault()
-          console.log('start');
-          blog_id=$(".blogid").val()
-          console.log(blog_id)
-          name=$("#name").val()
-          body=$("#body").val()
-          console.log(name)
-          console.log(body)
-          $.ajax({
-              type: 'POST',
-              url: '{% url "createform" %}',
-              data:{
-                  name: $("#name").val(),
-                  body: $("#body").val(),
-                  blog_id:blog_id,
-                  'csrfmiddlewaretoken':$('input[name=csrfmiddlewaretoken]').val(),
-              },
-              dataType: 'json',
-              success: function (response){
-                  if (name != "" ){
-                      $("#body").val("")
-                  }
-                  if (body != ""){
-                      $("#name").val("")
-                  }
+//   $(document).on('click', '#comment-submit', function (e) {
+//           e.preventDefault()
+//           console.log('start');
+//           blog_id=$(".blogid").val()
+//           console.log(blog_id)
+//           name=$("#name").val()
+//           body=$("#body").val()
+//           console.log(name)
+//           console.log(body)
+//           $.ajax({
+//               type: 'POST',
+//               url: '{% url "createform" %}',
+//               data:{
+//                   name: $("#name").val(),
+//                   body: $("#body").val(),
+//                   blog_id:blog_id,
+//                   'csrfmiddlewaretoken':$('input[name=csrfmiddlewaretoken]').val(),
+//               },
+//               dataType: 'json',
+//               success: function (response){
+//                   if (name != "" ){
+//                       $("#body").val("")
+//                   }
+//                   if (body != ""){
+//                       $("#name").val("")
+//                   }
                     
-                // if (response["total_data"] ==  1)
-                //   $(".comment_count").text(response["total_data"] + "Comment")
-                var _count_total=$(".comment-box").length
-                console.log(response.comment_count)
-                if (response.comment_count == 2){
-                  $(".comment_count").text(response["comment_count"] + " Comment")
-                }
-                $(".comment_count").text(response["comment_count"] + " Comments")
-                $(".commentfirst").remove()
-                if (response.comment_count >= 5){
-                    $("#load-btn").show()
-                }
+//                 // if (response["total_data"] ==  1)
+//                 //   $(".comment_count").text(response["total_data"] + "Comment")
+//                 var _count_total=$(".comment-box").length
+//                 console.log(response.comment_count)
+//                 if (response.comment_count == 2){
+//                   $(".comment_count").text(response["comment_count"] + " Comment")
+//                 }
+//                 $(".comment_count").text(response["comment_count"] + " Comments")
+//                 $(".commentfirst").remove()
+//                 if (response.comment_count >= 5){
+//                     $("#load-btn").show()
+//                 }
                 
-                console.log(response)
-                var _html=''
-                // var json_comment=$.parseJSON(res.comments)
-                var comment = JSON.parse(response["comments"]);
-                var fields = comment[0]["fields"];
-                // $(".container-comments").empty()
-                // $.each(json_comment, function(index,data){
+//                 console.log(response)
+//                 var _html=''
+//                 // var json_comment=$.parseJSON(res.comments)
+//                 var comment = JSON.parse(response["comments"]);
+//                 var fields = comment[0]["fields"];
+//                 // $(".container-comments").empty()
+//                 // $.each(json_comment, function(index,data){
 
-                _html=`
+//                 _html=`
                 
-              {% if comment.is_reply == False %}
-                  <li class="comment-box">
-                    <div class="author-thumb">
-                      <img src="{{comment.comment_image.url}}" alt="">
-                    </div>
-                    <div class="right-content">
-                      <h4>{{comment.name}}</h4>
-                      <p>{{comment.body|linebreaksbr}}</p>
-                    </div>
+//               {% if comment.is_reply == False %}
+//                   <li class="comment-box">
+//                     <div class="author-thumb">
+//                       <img src="{{comment.comment_image.url}}" alt="">
+//                     </div>
+//                     <div class="right-content">
+//                       <h4>{{comment.name}}</h4>
+//                       <p>{{comment.body|linebreaksbr}}</p>
+//                     </div>
 
-                  </li><br>
-                  {% for reply in comment.replies %}
-                      <li style="padding-left: 50px;">
-                        <div class="author-thumb">
-                          <img src="{{comment.comment_image.url}}" alt="">
-                        </div>
-                        <div class="right-content">
-                          <h4>{{reply.reply_name}}</h4>
-                          <p>{{reply.reply_body|linebreaksbr}}</p>
-                        </div>
+//                   </li><br>
+//                   {% for reply in comment.replies %}
+//                       <li style="padding-left: 50px;">
+//                         <div class="author-thumb">
+//                           <img src="{{comment.comment_image.url}}" alt="">
+//                         </div>
+//                         <div class="right-content">
+//                           <h4>{{reply.reply_name}}</h4>
+//                           <p>{{reply.reply_body|linebreaksbr}}</p>
+//                         </div>
 
-                      </li><br>
-                  {% endfor %}
+//                       </li><br>
+//                   {% endfor %}
 
-                  <!-- begin reply form -->
-                  <form id="comment"  method="POST">
-                    {% csrf_token %}
+//                   <!-- begin reply form -->
+//                   <form id="comment"  method="POST">
+//                     {% csrf_token %}
 
-                    <div class="row">
-                      {% if request.user.is_authenticated == False %}
-                        <fieldset class="col-lg-12">
-                          {{form.reply_name.label}}
-                          {{form.reply_name}}
-                        </fieldset>
-                      {% endif %}
+//                     <div class="row">
+//                       {% if request.user.is_authenticated == False %}
+//                         <fieldset class="col-lg-12">
+//                           {{form.reply_name.label}}
+//                           {{form.reply_name}}
+//                         </fieldset>
+//                       {% endif %}
 
-                      <fieldset class="col-lg-12">
-                        <p>Reply:</p>
-                        {{form.reply_body}}
-                      </fieldset>
+//                       <fieldset class="col-lg-12">
+//                         <p>Reply:</p>
+//                         {{form.reply_body}}
+//                       </fieldset>
                       
-                      <div class="col-lg-12">
-                        <fieldset>
-                          <input type="hidden" class="reply_id" name="reply_id" value="{{ comment.id }}">
-                          <button style="margin-bottom: 20px;" type="submit" id="reply-submit" class="main-button">Submit</button>
-                          <br>
-                        </fieldset>
-                      </div>
-                      <br>
-                    </div>
-                  </form>
-                  <!-- endreplyform -->
+//                       <div class="col-lg-12">
+//                         <fieldset>
+//                           <input type="hidden" class="reply_id" name="reply_id" value="{{ comment.id }}">
+//                           <button style="margin-bottom: 20px;" type="submit" id="reply-submit" class="main-button">Submit</button>
+//                           <br>
+//                         </fieldset>
+//                       </div>
+//                       <br>
+//                     </div>
+//                   </form>
+//                   <!-- endreplyform -->
                 
-                {% endif %}
+//                 {% endif %}
                 
-                <li style="margin-bottom: 10px;"  class="comment-box">
-                    <div class="author-thumb">
-                      <img style="height: 80px; width: 80px;" src="/images/${fields['comment_image']}" alt="">
-                    </div>
-                    <div class="right-content">
-                      <h4>${fields['name']}</h4>
-                      <p>${fields['body']}</p>
+//                 <li style="margin-bottom: 10px;"  class="comment-box">
+//                     <div class="author-thumb">
+//                       <img style="height: 80px; width: 80px;" src="/images/${fields['comment_image']}" alt="">
+//                     </div>
+//                     <div class="right-content">
+//                       <h4>${fields['name']}</h4>
+//                       <p>${fields['body']}</p>
                       
-                    </div>
-                    <br>
-                    <br>
+//                     </div>
+//                     <br>
+//                     <br>
                   
                   
                   
-                  </li>
-                  </li><br>`
+//                   </li>
+//                   </li><br>`
 
-                $(".container-comments").prepend(_html)
+//                 $(".container-comments").prepend(_html)
 
                 
                 
                 
 
-              },
-              error: function(){
-                  console.log('error');
-              }
-          });
+//               },
+//               error: function(){
+//                   console.log('error');
+//               }
+//           });
 
-      });
+//       });
 
     
-      $(document).on('click', '#reply-submit', function (e) {
-          e.preventDefault()
-          console.log('start');
-          blog_id=$(".blogid").val()
-          reply_id= e.get(value)
-          console.log(reply_id)
-          $("#reply_name").val("")
-          $("#reply_body").val("")
-          $.ajax({
-              type: 'POST',
-              url: '{% url "replyform" %}',
-              data:{
-                  name: $("#reply_name").val(),
-                  body: $("#reply_body").val(),
-                  blog_id:blog_id,
-                  reply_id:reply_id,
-                  'csrfmiddlewaretoken':$('input[name=csrfmiddlewaretoken]').val(),
-              },
-              dataType: 'json',
-              success: function (response){
+//       $(document).on('click', '#reply-submit', function (e) {
+//           e.preventDefault()
+//           console.log('start');
+//           blog_id=$(".blogid").val()
+//           reply_id= e.get(value)
+//           console.log(reply_id)
+//           $("#reply_name").val("")
+//           $("#reply_body").val("")
+//           $.ajax({
+//               type: 'POST',
+//               url: '{% url "replyform" %}',
+//               data:{
+//                   name: $("#reply_name").val(),
+//                   body: $("#reply_body").val(),
+//                   blog_id:blog_id,
+//                   reply_id:reply_id,
+//                   'csrfmiddlewaretoken':$('input[name=csrfmiddlewaretoken]').val(),
+//               },
+//               dataType: 'json',
+//               success: function (response){
                
-                console.log(response.sucess)
-                console.log(response)
-                var _html=''
-                // var json_comment=$.parseJSON(res.comments)
-                var comment = JSON.parse(response["comments"]);
-                var fields = comment[0]["fields"];
-                // $(".container-comments").empty()
-                // $.each(json_comment, function(index,data){
+//                 console.log(response.sucess)
+//                 console.log(response)
+//                 var _html=''
+//                 // var json_comment=$.parseJSON(res.comments)
+//                 var comment = JSON.parse(response["comments"]);
+//                 var fields = comment[0]["fields"];
+//                 // $(".container-comments").empty()
+//                 // $.each(json_comment, function(index,data){
 
-                _html=``
+//                 _html=``
 
-                $(".container-comments").prepend(_html)
+//                 $(".container-comments").prepend(_html)
 
                 
                 
                 
 
-              },
-              error: function(){
-                  console.log('error');
-              }
-          });
+//               },
+//               error: function(){
+//                   console.log('error');
+//               }
+//           });
 
-      });
+//       });
+
 </script>
      
 
