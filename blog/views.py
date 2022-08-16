@@ -56,6 +56,7 @@ def createBlog(request):
                 
                 blog=form.save(commit=False)
                 blog.addcategory=blog.addcategory.lower() 
+                blog.title=blog.title.upper()
                 if blog.categories.name == 'None' and blog.addcategory == 'none':
                     messages.error(request, 'Make sure you add a category') 
                 else:
