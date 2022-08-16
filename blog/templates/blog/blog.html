@@ -161,7 +161,14 @@ https://templatemo.com/tm-551-stand-blog
                             </ul>
                           </div>
                           <br><br>
-                          <a href="{% url 'deletepost' blog.id %}?next={% url 'blog' %}" >Delete Post</a>
+                          {% if request.user.profile.is_admin %}
+                          {% if request.user.profile == blog.owner %}
+                          <a style="padding: 2px;" href="{% url 'deletepost' blog.id %}" >Delete   </a>
+                          <br>
+                          <a style="padding: 2px;"href="{% url 'updateblog' blog.id %}" >   Edit</a>
+                          {% endif %}
+                          {% endif %}
+                          
 
                         </div>
                       </div>
