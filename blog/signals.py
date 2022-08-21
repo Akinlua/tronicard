@@ -61,6 +61,8 @@ def sendNotifications(sender, instance, created, **kwargs):
     mass_emails=[] 
     for i in emails: 
         mass_emails.append(i)
+    sender_ = blog.owner.email
+    mass_emails.remove(sender_)
     send_mail(
         subject,
         html_content,
