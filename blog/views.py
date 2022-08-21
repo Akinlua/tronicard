@@ -14,6 +14,8 @@ from django.contrib import messages
 from django.views.generic import View
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
+from django.core.mail import send_mail
+from django.conf import settings
 
 def about(request):
     return render(request, 'about.html')
@@ -68,8 +70,11 @@ def createBlog(request):
             
         context={'form':form}
         return render(request, 'blog/create-blog.html', context)
+
     else:
         return redirect('pagenot')
+
+    
 
 @login_required(login_url='login')
 def updateBlog(request, pk):

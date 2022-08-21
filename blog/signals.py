@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 
 from .models import Tags, Blog, Categories
 
-
+from users.models import Profile
+from django.core.mail import send_mail
 from django.conf import settings
 
 def updateTag(sender, instance, created, **kwargs):
@@ -42,6 +43,32 @@ def updateCategory(sender, instance, created, **kwargs):
                     categories=Categories.objects.create(
                         name=blog.addcategory,
                     )
-        
+
+
+def sendNotifications(sender, instance, created, **kwargs):
+    blog=instance
+    html_content=(               
+                '\
+                Click the following link to read the new post: {}- https://tronicard.herokuapp.com/single-blog/{}/ \
+                '\
+                ).format(
+                blog.title,
+                blog.id,
+                )
+    subject= "New Blog Post" 
+    message= "Kindly check out our new post Blog. "
+    emails = Profile.objects.values_list('email', flat=True) 
+    mass_emails=[] 
+    for i in emails: 
+        mass_emails.append(i)
+    send_mail(
+        subject,
+        html_content,
+        settings.EMAIL_HOST_USER,
+        mass_emails,
+        fail_silently=False,
+    )
+
 post_save.connect(updateTag, sender= Blog)
 post_save.connect(updateCategory, sender= Blog)
+post_save.connect(sendNotifications, sender=Blog)

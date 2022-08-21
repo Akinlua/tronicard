@@ -35,7 +35,7 @@
                           <li><a href="#">{{blog.created}}</a></li>
                           <li><a href="{% url 'singleblog' blog.id %}#com">{{blog.comments_set.all.count}} Comment{{blog.comments_set.all.count|pluralize:"s"}}</a></li>
                         </ul>
-                        <p>{{blog.body|linebreaksbr}}</p>
+                        <p>{{blog.body|slice:150|linebreaksbr}}</p>
                         <div class="post-options">
                           <div class="row">
                             <div class="col-6">
