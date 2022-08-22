@@ -21,7 +21,7 @@ def about(request):
     return render(request, 'about.html')
 def home(request):
 
-
+    
     blog,q= searchStuff(request)
     banner_blog= Blog.objects.all()
     banner_blog=disorder_Blog(banner_blog)
@@ -38,7 +38,11 @@ def home(request):
     blog_images=blogimgnames()
     
     context={'blog_images':blog_images, 'blogs':disorder_blog, 'banner_blog':banner_blog, 'q':q, 'sidebl':sideblog, 'tags':tags, 'categories':categories}
-    return render(request, 'home.html', context)
+    if  request.user.is_authenticated:
+        return render(request, 'home.html', context)
+    else:
+        return redirect('login')
+    
 
 def exitNot(request):
     return render(request, 'blog/exitnot.html')
