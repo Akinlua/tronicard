@@ -35,14 +35,15 @@
                           <li><a href="#">{{blog.created}}</a></li>
                           <li><a href="{% url 'singleblog' blog.id %}#com">{{blog.comments_set.all.count}} Comment{{blog.comments_set.all.count|pluralize:"s"}}</a></li>
                         </ul>
-                        <p>{{blog.body|slice:150|linebreaksbr}}</p>
+                        <p>{{blog.body|slice:150|linebreaksbr}}...</p>
                         <div class="post-options">
                           <div class="row">
                             <div class="col-6">
                               <ul class="post-tags">
                                 
-                                  
+                                {% if tag %}
                                 <li><i class="fa fa-tags"></i></li>
+                                {% endif %}
                                 {% for tag in blog.tags.all %}
                                 <li><a >{{tag.name}}</a></li>
                                 {% endfor %}

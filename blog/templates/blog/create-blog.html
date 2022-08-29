@@ -136,6 +136,7 @@ https://templatemo.com/tm-551-stand-blog
                       <form id="contact" action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {% for field in form %}
+
                         {% if field.label == 'Tag' %}
                         <p>Hold on the Ctrl key and select all tags required</p>
                         {% endif %}
@@ -149,6 +150,11 @@ https://templatemo.com/tm-551-stand-blog
                         {% if field.label == 'addtag' %}
                         <p>If you want to add more tag or your prefred tag isn't above the type in the tag. Make sure to add a space while typing in various tags.e.g(mercy favor)</p>
                         {% endif %}
+                        
+                        {% if field.label == 'Highlight' %}
+                        <p>Add a portion of the message that can attract people to read below:</p>
+                        {% endif %}
+
                         {{field.label}}
 
 

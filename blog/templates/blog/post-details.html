@@ -127,7 +127,9 @@ https://templatemo.com/tm-551-stand-blog
                         <div class="row">
                           <div class="col-6">
                             <ul class="post-tags">
+                                {% if tag %}
                                 <li><i class="fa fa-tags"></i></li>
+                                {% endif %}
                                 {% for tag in blog.tags.all %}
                                 <li><a >{{tag.name}}</a></li>
                                 {% endfor %}
@@ -140,7 +142,11 @@ https://templatemo.com/tm-551-stand-blog
                             <ul class="post-share">
                               <li><i class="fa fa-share-alt"></i></li>
                               <li><a href="#">{% post_to_facebook object_or_url "Facebook" %}</a></li>
-                              <li><a href="#"> {% post_to_twitter "{{blog.body}}" object_or_url "Twitter" %}</a></li>
+                              {% if blog.highlight %}
+                              <li><a href="#"> {% post_to_twitter "'...{{blog.highlight}}...' see more-" object_or_url "Twitter" %}</a></li>
+                              {% else %}
+                              <li><a href="#"> {% post_to_twitter "{{blog.body}" object_or_url "Twitter" %}</a></li>
+                              {% endif %}
                               <li><a href="#">{% post_to_whatsapp object_or_url "WhatsApp" %}</a></li>
                             </ul>
                             <br><br>

@@ -133,7 +133,6 @@ def blog(request):
     
     tags= Tags.objects.all()
     categories= Categories.objects.all()
-
     blog_images=blogimgnames()
     context={'categories':categories, 'tags':tags, 'customRange':customRange,'blogs':blogs, 'q':q, 'sidebl':sideblog, 'blog_images':blog_images}
     return render(request, 'blog/blog.html', context)
