@@ -41,7 +41,9 @@
                             <div class="col-6">
                               <ul class="post-tags">
                                 
-                                {% if tag %}
+                                {% if blog.addtag %}
+                                <li><i class="fa fa-tags"></i></li>
+                                {% elif blog.tags %} 
                                 <li><i class="fa fa-tags"></i></li>
                                 {% endif %}
                                 {% for tag in blog.tags.all %}

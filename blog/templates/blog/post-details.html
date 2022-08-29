@@ -127,15 +127,17 @@ https://templatemo.com/tm-551-stand-blog
                         <div class="row">
                           <div class="col-6">
                             <ul class="post-tags">
-                                {% if tag %}
-                                <li><i class="fa fa-tags"></i></li>
-                                {% endif %}
-                                {% for tag in blog.tags.all %}
-                                <li><a >{{tag.name}}</a></li>
-                                {% endfor %}
-                                {% if blog.addtag %}
-                                <li><a> {{blog.addtag}}</a></li>
-                                {% endif %}
+                              {% if blog.addtag %}
+                              <li><i class="fa fa-tags"></i></li>
+                              {% elif blog.tags %} 
+                              <li><i class="fa fa-tags"></i></li>
+                              {% endif %}
+                              {% for tag in blog.tags.all %}
+                              <li><a >{{tag.name}}</a></li>
+                              {% endfor %}
+                              {% if blog.addtag %}
+                              <li><a> {{blog.addtag}}</a></li>
+                              {% endif %}
                             </ul>
                           </div>
                           <div class="col-6">
