@@ -46,30 +46,32 @@ def updateCategory(sender, instance, created, **kwargs):
 
 
 def sendNotifications(sender, instance, created, **kwargs):
-    blog=instance
-    html_content=(               
-                '\
-                Click the following link to read the new post: {}- https://tronicard.herokuapp.com/single-blog/{}/ \
-                '\
-                ).format(
-                blog.title,
-                blog.id,
-                )
-    subject= "New Blog Post" 
-    message= "Kindly check out our new post Blog. "
-    emails = Profile.objects.values_list('email', flat=True) 
-    mass_emails=[] 
-    for i in emails: 
-        mass_emails.append(i)
-    sender_ = blog.owner.email
-    mass_emails.remove(sender_)
-    send_mail(
-        subject,
-        html_content,
-        settings.EMAIL_HOST_USER,
-        mass_emails,
-        fail_silently=False,
-    )
+    if created:
+        print('send')
+        blog=instance
+        html_content=(               
+                    '\
+                    Click the following link to read the new post: {}- https://tronicard.herokuapp.com/single-blog/{}/ \
+                    '\
+                    ).format(
+                    blog.title,
+                    blog.id,
+                    )
+        subject= "New Blog Post" 
+        message= "Kindly check out our new post Blog. "
+        emails = Profile.objects.values_list('email', flat=True) 
+        mass_emails=[] 
+        for i in emails: 
+            mass_emails.append(i)
+        sender_ = blog.owner.email
+        mass_emails.remove(sender_)
+        send_mail(
+            subject,
+            html_content,
+            settings.EMAIL_HOST_USER,
+            mass_emails,
+            fail_silently=False,
+        )
 
 post_save.connect(updateTag, sender= Blog)
 post_save.connect(updateCategory, sender= Blog)

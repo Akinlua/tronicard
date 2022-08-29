@@ -26,9 +26,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECRET_KEY = '76e9481036a8d60e62cc06513bf763'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['tronicard.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'tronicard.herokuapp.com']
 
 
 # Application definition
@@ -151,4 +151,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
