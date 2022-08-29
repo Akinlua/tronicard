@@ -16,6 +16,22 @@ from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 from django.core.mail import send_mail
 from django.conf import settings
+from django.shortcuts import render
+from django.template import RequestContext
+
+
+def handler404(request, *args, **argv):
+    response = render('404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
+
+def handler500(request, *args, **argv):
+    response = render('500.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 500
+    return response
 
 def about(request):
     return render(request, 'about.html')
