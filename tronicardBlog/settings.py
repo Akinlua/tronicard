@@ -26,8 +26,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECRET_KEY = '76e9481036a8d60e62cc06513bf763'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
+# DEBUG = False
+DEBUG = os.environ.get('DEBUG')
 ALLOWED_HOSTS = ['127.0.0.1', 'tronicard.herokuapp.com']
 
 
