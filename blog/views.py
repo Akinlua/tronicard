@@ -30,7 +30,8 @@ def home(request):
     banner_blog=sideBlog(banner_blog,10)
     # disorder_blog=disorder_Blog(blog)
 
-    disorder_blog= sideBlog(blog, 12)
+    disorder_blog= disorder_Blog(blog)
+    disorder_blog= sideBlog(disorder_blog, 4)
     sideblog=Blog.objects.all()
     sideblog= sideBlog(sideblog, 5)
     
