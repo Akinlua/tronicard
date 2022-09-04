@@ -37,7 +37,7 @@
             </li>
             {% endif %}
             {% if request.user.is_authenticated %}
-            <p style="margin-top: 2px;"> Logged in as {{request.user}}</p>
+            <p style="margin-top: 2px;"> <a href="{% url 'account' %}">Logged in as {{request.user}}</a></p>
             {% endif %}
 
           </ul>

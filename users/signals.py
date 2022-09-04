@@ -30,6 +30,15 @@ def deleteUser(sender, instance, **kwargs):
     user= instance.user
     user.delete()
 
+# def updateUser(sender, instance, **kwargs):
+#     profile= instance
+#     usename=profile.user.username
+#     user = User.objects.update_or_create(
+#         username= profile.username,
+#         email= profile.email,
+#         defaults={'username': usename}
+#     )
 
 post_save.connect(createProfile, sender=User)
 post_delete.connect(deleteUser, sender=Profile)
+# post_save.connect(updateUser, sender=Profile)

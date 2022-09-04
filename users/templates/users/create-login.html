@@ -136,6 +136,8 @@ https://templatemo.com/tm-551-stand-blog
                     </div>
                     {% endfor %}
                     {% endif %}
+
+                    <!-- create account -->
                     {% if page == 'create' %}
                     <div class="sidebar-heading">
                       <h2>Create an account</h2>
@@ -178,6 +180,8 @@ https://templatemo.com/tm-551-stand-blog
 
 
                     </div>
+
+                    <!-- login -->
                     {% else %}
                     <div class="sidebar-heading">
                       <h2>Login</h2>
@@ -202,15 +206,14 @@ https://templatemo.com/tm-551-stand-blog
                             <fieldset>
                               <input name="Password" type="password"  placeholder="••••••••" required="">
                             </fieldset>
+                            
                           </div>    
-
-                         
                           
-                          <P class="col-md-6 col-sm-12">New here? <a href="{% url 'creatacc' %}">Sign Up</a></P>
-
-                          <br>
                         
                           <div class="col-lg-12">
+                            <p><a href="{% url 'reset_password' %}">Forgot Password?</a></p>
+                            <br>
+                            <p class="">New here? <a href="{% url 'creatacc' %}">Sign Up</a></p>
                             <fieldset>
                               <button  type="submit" id="form-submit" class="main-button">Login</button>
                             </fieldset>

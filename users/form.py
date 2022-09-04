@@ -13,7 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
             'first_name':'Name'
         }
 
-# class ProfileForm(ModelForm):
-#     class Meta:
-#         model= Profile
-#         fields= ['name','email', 'username']
+class ProfileForm(ModelForm):
+    class Meta:
+        model= Profile
+        fields= ['name','email', 'username']

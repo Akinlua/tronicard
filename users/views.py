@@ -5,11 +5,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Profile
+from .form import ProfileForm
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required(login_url='login')
 def logoutUser(request):
     logout(request)
     return redirect('login')
+
 
 def createAccount(request):
     form=CustomUserCreationForm()
@@ -56,5 +60,48 @@ def loginUser(request):
     context={'page':page}
     return render(request, 'users/create-login.html', context)
 
+@login_required(login_url='login')
 def account(request):
-    return render(request, 'users/account.html')
+    user= request.user
+    profile= request.user.profile
+    context={'profile':profile, 'user':user}
+    return render(request, 'users/account.html', context)
+
+def editaccount(request):
+    user= request.user
+    user_profile= request.user.profile
+    form = ProfileForm(instance=user_profile)
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            profile=form.save(commit=False)
+            # emails
+            emails = Profile.objects.values_list('email', flat=True) 
+            mass_emails=[] 
+            for i in emails: 
+                mass_emails.append(i)
+            mass_emails.remove(user.email)
+            # usernames
+            username = Profile.objects.values_list('username', flat=True) 
+            mass_usernames=[] 
+            for i in username: 
+                mass_usernames.append(i)
+            mass_usernames.remove(user.username)
+            print(user.username)
+            print(mass_usernames)
+            print(mass_emails)
+            print(profile.username)
+            # users= Profile.objects.exclude(username=user_profile.username)
+            if (profile.username in mass_usernames) or (profile.email in mass_emails) :
+                messages.error(request, 'Username or Email Taken')
+            else:
+                user.username= profile.username
+                user.email= profile.email
+                user.first_name= profile.name
+                user.save()
+                profile.save()
+                return redirect('account')
+        else:
+            messages.error(request,'Username or Email already exist')
+    context={'form':form}
+    return render(request, 'users/edit account.html', context)
